@@ -1,0 +1,34 @@
+name: Ejecutar pruebas E2E con CodeceptJS + Allure
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar pruebas con Allure
+        run: |
+          npx codeceptjs run --plugins allure
+          npx allure generate output --clean -o allure-report
+
+      - name: Publicar Reporte de Allure como artefacto
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: allure-report

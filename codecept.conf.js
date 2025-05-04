@@ -24,5 +24,10 @@ exports.config = {
     steps: "./steps/youtubeAutomatizacion.feature",
     tests: ["./tests/youtubeAutomatizacion.js"],
   }, 
+  plugins: {
+    allure: {
+      enabled: true
+    }
+  },
   name: 'framework_andy',
 }
